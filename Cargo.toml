@@ -1,0 +1,11 @@
+[package]
+name = "evropa-port-scanner"
+version = "0.1.0"
+authors = ["Andrei Dodu"]
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1", features = [ "rt", "rt-multi-thread", "macros", "io-util", "net", "time"] } 
+futures = "0.3.28"
+num_cpus="1.15.0"
+clap = {version = "4.2.2", features=["derive"]}
