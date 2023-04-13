@@ -12,20 +12,6 @@ async fn main() {
     scan_all(args.ip.as_str()).await;
 }
 
-pub fn scan(ip: String, i: u16) {
-    let result = TcpStream::connect_timeout(
-        &format!("{}:{}", ip, i)
-            .to_socket_addrs()
-            .unwrap()
-            .next()
-            .unwrap(),
-        Duration::from_millis(1000),
-    );
-    if result.is_ok() {
-        println!("{} opened", i);
-    }
-}
-
 pub async fn scan_all(ip: &str) {
     let i: u16 = 0;
     let i_mutex = Arc::new(Mutex::new(i));
@@ -53,6 +39,20 @@ pub async fn scan_all(ip: &str) {
         if *ii > u16::MAX {
             break;
         }
+    }
+}
+
+pub fn scan(ip: String, i: u16) {
+    let result = TcpStream::connect_timeout(
+        &format!("{}:{}", ip, i)
+            .to_socket_addrs()
+            .unwrap()
+            .next()
+            .unwrap(),
+        Duration::from_millis(1000),
+    );
+    if result.is_ok() {
+        println!("{} opened", i);
     }
 }
 
