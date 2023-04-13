@@ -1,4 +1,4 @@
-Evropa Port Scanner is a IP port scanner application.
+Evropa Port Scanner is a port scanner application.
 
 # Help
 ```
