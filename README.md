@@ -1,7 +1,7 @@
 Evropa Port Scanner is a port scanner application.
 
 # Download
-Download [Evropa Port Scanner](https://github.com/goto-eof/evropa-port-scanner/releases)
+Download [Evropa Port Scanner](https://github.com/goto-eof/evropa-port-scanner/releases).
 
 # Help
 ```
