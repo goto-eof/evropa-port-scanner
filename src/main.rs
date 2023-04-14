@@ -9,10 +9,10 @@ use std::{
 #[tokio::main(flavor = "multi_thread")]
 async fn main() {
     let args = Args::parse();
-    scan_all(args.ip.as_str()).await;
+    scan_all(args.ip.as_str(), args.ttl).await;
 }
 
-pub async fn scan_all(ip: &str) {
+pub async fn scan_all(ip: &str, ttl: u64) {
     let i: u16 = 0;
     let i_mutex = Arc::new(Mutex::new(i));
     let ip_mutex = Arc::new(Mutex::new(ip.to_owned()));
@@ -24,7 +24,7 @@ pub async fn scan_all(ip: &str) {
             let result = tokio::spawn(async move {
                 let mut i = i_mutex.lock().unwrap();
                 let ip = ip_mutex.lock().unwrap();
-                scan(ip.to_string(), *i);
+                scan(ip.to_string(), *i, ttl);
                 *i = *i + 1;
             });
             handlers.push(result);
@@ -42,14 +42,14 @@ pub async fn scan_all(ip: &str) {
     }
 }
 
-pub fn scan(ip: String, i: u16) {
+pub fn scan(ip: String, i: u16, ttl: u64) {
     let result = TcpStream::connect_timeout(
         &format!("{}:{}", ip, i)
             .to_socket_addrs()
             .unwrap()
             .next()
             .unwrap(),
-        Duration::from_millis(1000),
+        Duration::from_millis(ttl),
     );
     if result.is_ok() {
         println!("{} opened", i);
@@ -59,7 +59,11 @@ pub fn scan(ip: String, i: u16) {
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// IP addres on which port scanner should run
+    /// IP addres on which port scanner should work
     #[arg(short, long)]
     ip: String,
+
+    /// timeout of the request in millis
+    #[arg(short, long, default_value_t = 1000)]
+    ttl: u64,
 }
