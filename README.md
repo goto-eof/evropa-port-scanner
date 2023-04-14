@@ -10,5 +10,5 @@ Download [Evropa Port Scanner](https://github.com/goto-eof/evropa-port-scanner/r
 
 # Scan a IP
 ```
-./evropa-port-scanner -i andre-i.dev
+./evropa-port-scanner -i andre-i.eu
 ```
