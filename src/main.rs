@@ -32,7 +32,7 @@ pub async fn scan_all(ip: &str, ttl: u64) {
         let result = join_all(handlers).await;
         result.iter().for_each(|item| {
             if item.is_err() {
-                println!("Scanning error");
+                println!("Port scanning error");
             }
         });
         let ii = i_mutex.lock().unwrap();
